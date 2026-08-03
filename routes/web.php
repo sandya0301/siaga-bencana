@@ -53,9 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/admin/users/{user}', [AdminController::class, 'userUpdate'])->name('admin.users.update');
         Route::delete('/admin/users/{user}', [AdminController::class, 'userDestroy'])->name('admin.users.destroy');
 
-        // News Management
-        Route::post('/admin/news', [AdminNewsController::class, 'store'])->name('admin.news.store');
-        Route::delete('/admin/news/{news}', [AdminNewsController::class, 'destroy'])->name('admin.news.destroy');
+
     });
 });
 

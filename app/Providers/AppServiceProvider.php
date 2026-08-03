@@ -14,12 +14,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // forceScheme('https') is a belt-and-suspenders fallback for CLI contexts
-        // (Artisan, queue workers) where X-Forwarded-Proto headers are absent.
-        // We key off APP_URL starting with https:// instead of APP_ENV=production
-        // so this works regardless of what environment name Railway uses.
-        if (str_starts_with(config('app.url'), 'https://')) {
+        if ($this->app->environment('production') || str_starts_with(config('app.url'), 'https://') || request()->header('x-forwarded-proto') === 'https') {
             URL::forceScheme('https');
+            $this->app['request']->server->set('HTTPS', 'on');
         }
     }
 }
