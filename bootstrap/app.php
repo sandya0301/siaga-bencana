@@ -14,9 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Trust all proxies so Railway's load balancer forwards X-Forwarded-Proto: https
-        // correctly. Without this, Laravel sees every request as http:// and generates
-        // HTTP URLs for assets, routes, and form actions (Mixed Content errors).
         $middleware->trustProxies(at: '*');
 
         $middleware->alias([
